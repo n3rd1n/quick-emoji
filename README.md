@@ -9,7 +9,7 @@ Requires Node 24+, npm 11.10+, and a Rust toolchain.
 ```bash
 npm install
 npm run prepare
-npm run tauri dev
+npm run tauri:dev
 ```
 
 Custom keywords are stored in the app webview (`localStorage`) and are not committed.
