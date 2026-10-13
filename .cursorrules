@@ -1,0 +1,14 @@
+When generating a Git commit message for this repository, follow Conventional Commits in English.
+
+Format: `<type>(<optional-scope>): <short summary>`
+
+Types: feat, fix, docs, style, refactor, perf, test, build, ci, chore, revert
+
+- Imperative mood; subject explains why, not a file list
+- Subject ≤ 72 characters, lowercase after the colon, no trailing period
+- Optional body: 1–2 sentences after a blank line; omit if the subject is enough
+- Breaking change: type with `!` and/or a `BREAKING CHANGE:` footer
+- Do not mention AI or Cursor; no Co-authored-by unless asked
+
+Good: `feat(search): rank custom keywords above default aliases`
+Bad: `Updated files` / `Added Fuse.js and changed App.svelte`

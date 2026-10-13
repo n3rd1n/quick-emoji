@@ -1,0 +1,39 @@
+---
+description: Conventional Commits for this repo. Apply when writing or generating git commit messages.
+alwaysApply: true
+---
+
+# Git commit messages
+
+Use [Conventional Commits](https://www.conventionalcommits.org/). English only. Imperative mood. The subject explains **why**, not which files changed.
+
+```
+<type>(<optional-scope>): <short summary>
+```
+
+Allowed types: `feat` `fix` `docs` `style` `refactor` `perf` `test` `build` `ci` `chore` `revert`
+
+## Rules
+
+- Subject ≤ 72 characters, lowercase after the colon, no trailing period
+- Optional body: 1–2 sentences on motivation, separated by a blank line. Omit the body if the subject is enough
+- Breaking change: `feat!:` (or other type with `!`) and/or a `BREAKING CHANGE:` footer
+- Do not mention AI or Cursor, and do not add `Co-authored-by`, unless asked
+- When the agent commits, pass the message via HEREDOC (not `-m` twice)
+
+## Examples
+
+```
+feat(search): rank custom keywords above default aliases
+
+fix(paste): restore the previous clipboard after inserting an emoji
+
+docs: describe how to add personal keywords
+```
+
+```
+# Bad — what, not why; not conventional
+Updated files
+Added Fuse.js and changed App.svelte
+feat: added search and paste and also tweaked css
+```
