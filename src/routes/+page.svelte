@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount, tick } from "svelte";
-  import { copyText, hidePicker } from "$lib/clipboard";
+  import { copyText, hidePicker, insertEmoji } from "$lib/clipboard";
   import {
     loadCustomKeywords,
     loadRecents,
@@ -18,7 +18,7 @@
   let recents = $state<string[]>(loadRecents());
   let selectedIndex = $state(0);
   let keywordDraft = $state("");
-  let status = $state("Type to search, Enter to copy");
+  let status = $state("Enter inserts · Shift+Enter copies");
   let searchEl = $state<HTMLInputElement | undefined>();
 
   const results = $derived(searchEmoji(query, customKeywords, recents));
@@ -95,9 +95,18 @@
     saveCustomKeywords(next);
   }
 
-  async function choose(item: SearchItem) {
-    await copyText(item.emoji);
+  async function choose(item: SearchItem, paste: boolean) {
     recents = pushRecent(item.hexcode);
+    if (paste) {
+      status = `Inserting ${item.emoji}`;
+      try {
+        await insertEmoji(item.emoji);
+      } catch {
+        status = `Copied ${item.emoji} — paste with Cmd+V. Allow Accessibility if insert failed.`;
+      }
+      return;
+    }
+    await copyText(item.emoji);
     status = `Copied ${item.emoji}`;
   }
 
@@ -125,7 +134,7 @@
     } else if (event.key === "Enter") {
       event.preventDefault();
       if (selected) {
-        await choose(selected);
+        await choose(selected, !event.shiftKey);
       }
     }
   }
@@ -153,7 +162,7 @@
         aria-selected={index === selectedIndex}
         title={item.label}
         onmouseenter={() => (selectedIndex = index)}
-        onclick={() => choose(item)}
+        onclick={() => choose(item, true)}
       >
         {item.emoji}
       </button>

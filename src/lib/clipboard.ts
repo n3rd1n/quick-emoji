@@ -1,3 +1,5 @@
+import { invoke } from "@tauri-apps/api/core";
+
 export async function copyText(text: string): Promise<void> {
   try {
     const { writeText } = await import("@tauri-apps/plugin-clipboard-manager");
@@ -15,5 +17,16 @@ export async function hidePicker(): Promise<void> {
     await getCurrentWindow().hide();
   } catch {
     // Ignore when the Vite preview is open in a browser.
+  }
+}
+
+/** Hide the picker and paste into the app that was focused before. */
+export async function insertEmoji(text: string): Promise<void> {
+  try {
+    await invoke("insert_emoji", { text });
+  } catch (error) {
+    await copyText(text);
+    await hidePicker();
+    throw error;
   }
 }

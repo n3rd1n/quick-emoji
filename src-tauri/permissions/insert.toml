@@ -1,0 +1,4 @@
+[[permission]]
+identifier = "allow-insert-emoji"
+description = "Hide the picker and paste the selected emoji into the previously focused app"
+commands.allow = ["insert_emoji"]

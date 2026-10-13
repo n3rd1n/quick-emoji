@@ -12,4 +12,8 @@ npm run prepare
 npm run tauri:dev
 ```
 
+Enter inserts the emoji at the caret in the previously focused app. Shift+Enter copies it and keeps the picker open.
+
+On macOS, grant **Accessibility** to Quick Emoji the first time you insert (System Settings → Privacy & Security → Accessibility).
+
 Custom keywords are stored in the app webview (`localStorage`) and are not committed.
