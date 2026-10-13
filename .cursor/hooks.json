@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "hooks": {
+    "sessionStart": [
+      {
+        "command": "scripts/scan-secrets.py --cursor-hook"
+      }
+    ],
+    "beforeShellExecution": [
+      {
+        "command": "scripts/scan-secrets.py --cursor-hook",
+        "failClosed": true
+      }
+    ],
+    "beforeReadFile": [
+      {
+        "command": "scripts/scan-secrets.py --cursor-hook",
+        "failClosed": true
+      }
+    ],
+    "preToolUse": [
+      {
+        "command": "scripts/scan-secrets.py --cursor-hook",
+        "matcher": "Write|StrReplace",
+        "failClosed": true
+      }
+    ],
+    "beforeMCPExecution": [
+      {
+        "command": "scripts/scan-secrets.py --cursor-hook",
+        "failClosed": true
+      }
+    ]
+  }
+}
