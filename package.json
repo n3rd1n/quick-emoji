@@ -1,0 +1,9 @@
+{
+  "name": "quick-emoji",
+  "private": true,
+  "packageManager": "npm@11.21.0",
+  "engines": {
+    "node": ">=24.11.0",
+    "npm": ">=11.10.0"
+  }
+}

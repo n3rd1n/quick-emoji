@@ -1,0 +1,17 @@
+---
+description: npm supply-chain policy. Apply when installing, updating, or adding packages.
+alwaysApply: true
+---
+
+# npm supply chain
+
+`.npmrc` is the policy. Do not weaken it, and do not put auth tokens in the repo.
+
+- Require **npm ≥ 11.10** (`packageManager` is `npm@11.21.0`)
+- Commit `package-lock.json`; clean installs use `npm ci`
+- Add packages with `npm install <name>` (exact versions via `save-exact`)
+- Never add `git:`, `github:`, `file:`, or `http:` dependencies
+- Never pass `--ignore-scripts=false`, `--allow-git=all`, or `--dangerously-allow-all-scripts` on install
+- Never run `npm update` / `npm audit fix` without checking what landed
+- If a native package needs an install script (e.g. esbuild): ask first, then `npm rebuild <pkg> --ignore-scripts=false` for that package only
+- Fresh publishes are blocked for 7 days; urgent security patches go in `min-release-age-exclude[]=`
