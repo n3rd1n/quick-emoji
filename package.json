@@ -1,9 +1,38 @@
 {
   "name": "quick-emoji",
   "private": true,
+  "version": "0.1.0",
+  "description": "Search emoji by keyword and insert them at the caret",
+  "type": "module",
   "packageManager": "npm@11.21.0",
   "engines": {
     "node": ">=24.11.0",
     "npm": ">=11.10.0"
+  },
+  "scripts": {
+    "dev": "vite dev",
+    "build": "vite build",
+    "preview": "vite preview",
+    "prepare": "svelte-kit sync || echo ''",
+    "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+    "tauri": "tauri"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@sveltejs/adapter-static": "3.0.10",
+    "@sveltejs/kit": "2.70.3",
+    "@sveltejs/vite-plugin-svelte": "7.3.1",
+    "@tauri-apps/cli": "2.12.1",
+    "svelte": "5.57.1",
+    "svelte-check": "4.7.6",
+    "typescript": "6.0.3",
+    "vite": "8.3.3"
+  },
+  "dependencies": {
+    "@tauri-apps/api": "2.12.1",
+    "@tauri-apps/plugin-clipboard-manager": "2.4.1",
+    "emojibase": "17.0.0",
+    "emojibase-data": "17.0.0",
+    "fuse.js": "7.5.0"
   }
 }
