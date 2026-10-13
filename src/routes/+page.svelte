@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onMount } from "svelte";
+  import { onMount, tick } from "svelte";
   import { copyText, hidePicker } from "$lib/clipboard";
   import {
     loadCustomKeywords,
@@ -29,8 +29,39 @@
     selectedIndex = 0;
   });
 
-  onMount(() => {
+  async function focusSearch() {
+    await tick();
     searchEl?.focus();
+  }
+
+  onMount(() => {
+    void focusSearch();
+
+    const onWindowFocus = () => {
+      void focusSearch();
+    };
+    window.addEventListener("focus", onWindowFocus);
+
+    let stopListening: (() => void) | undefined;
+    void import("@tauri-apps/api/window")
+      .then(({ getCurrentWindow }) =>
+        getCurrentWindow().onFocusChanged((event) => {
+          if (event.payload) {
+            void focusSearch();
+          }
+        }),
+      )
+      .then((unlisten) => {
+        stopListening = unlisten;
+      })
+      .catch(() => {
+        // Not running inside Tauri (Vite preview).
+      });
+
+    return () => {
+      window.removeEventListener("focus", onWindowFocus);
+      stopListening?.();
+    };
   });
 
   function addKeyword(item: SearchItem, raw: string) {
@@ -101,7 +132,8 @@
 </script>
 
 <div class="shell">
-  <header data-tauri-drag-region>
+  <div class="drag" data-tauri-drag-region></div>
+  <header>
     <input
       bind:this={searchEl}
       bind:value={query}
@@ -171,12 +203,22 @@
   .shell {
     height: 100vh;
     display: grid;
-    grid-template-rows: auto 1fr auto;
+    grid-template-rows: 12px auto 1fr auto;
+  }
+
+  .drag {
+    cursor: grab;
+    -webkit-app-region: drag;
   }
 
   header {
-    padding: 10px;
+    padding: 8px 10px 10px;
     border-bottom: 1px solid #27272a;
+    -webkit-app-region: no-drag;
+  }
+
+  header input {
+    -webkit-app-region: no-drag;
   }
 
   header input,
