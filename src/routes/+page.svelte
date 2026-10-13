@@ -43,6 +43,7 @@
     window.addEventListener("focus", onWindowFocus);
 
     let stopListening: (() => void) | undefined;
+    let stopShown: (() => void) | undefined;
     void import("@tauri-apps/api/window")
       .then(({ getCurrentWindow }) =>
         getCurrentWindow().onFocusChanged((event) => {
@@ -58,9 +59,24 @@
         // Not running inside Tauri (Vite preview).
       });
 
+    void import("@tauri-apps/api/event")
+      .then(({ listen }) =>
+        listen("picker-shown", () => {
+          query = "";
+          void focusSearch();
+        }),
+      )
+      .then((unlisten) => {
+        stopShown = unlisten;
+      })
+      .catch(() => {
+        // Not running inside Tauri (Vite preview).
+      });
+
     return () => {
       window.removeEventListener("focus", onWindowFocus);
       stopListening?.();
+      stopShown?.();
     };
   });
 

@@ -12,6 +12,8 @@ npm run prepare
 npm run tauri:dev
 ```
 
+The picker starts hidden. Toggle it with **⌘⇧E** (Windows/Linux: **Ctrl+Shift+E**).
+
 Enter inserts the emoji at the caret in the previously focused app. Shift+Enter copies it and keeps the picker open.
 
 On macOS, grant **Accessibility** to Quick Emoji the first time you insert (System Settings → Privacy & Security → Accessibility).
